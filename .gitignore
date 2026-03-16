@@ -1,0 +1,13 @@
+# Thư mục Build
+[Bb]in/
+[Oo]bj/
+
+# Cấu hình cá nhân của Visual Studio
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+
+# File log và cache
+*.log
