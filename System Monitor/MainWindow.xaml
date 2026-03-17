@@ -4,13 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:System_Monitor"
+        xmlns:comp="clr-namespace:System_Monitor.Components"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="System Monitor" Height="720" Width="1080" FontFamily="Consolas"
+        Icon="/assets/icon.ico">
+  <Grid HorizontalAlignment="Left" Width="1080">
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="31*"/>
       <ColumnDefinition Width="69*"/>
     </Grid.ColumnDefinitions>
-
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"></RowDefinition>
+      <RowDefinition Height="*"></RowDefinition>
+      <RowDefinition Height="*"></RowDefinition>
+    </Grid.RowDefinitions>
+    <comp:Title TextTitle="CPU" FontSize="30" Margin="20,16,745,234" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+    <comp:Title TextTitle="RAM" FontSize="30" Margin="20,16,745,0" Grid.Row="1" Grid.ColumnSpan="2"/>
+    <comp:Title TextTitle="GPU" FontSize="30" Margin="20,7,745,10" Grid.Row="2" Grid.ColumnSpan="2"/>
   </Grid>
 </Window>
