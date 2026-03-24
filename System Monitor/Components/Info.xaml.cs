@@ -35,21 +35,31 @@ namespace System_Monitor.Components {
     public static readonly DependencyProperty TempProperty =
         DependencyProperty.Register(nameof(Temp), typeof(int), typeof(Info), new PropertyMetadata(0));
 
+    public string Name {
+      get { return (string)GetValue(NameProperty); }
+      set { SetValue(NameProperty, value); }
+    }
 
+    // Using a DependencyProperty as the backing store for Name.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty NameProperty =
+        DependencyProperty.Register(nameof(Name), typeof(string), typeof(Info), new PropertyMetadata("X"));
 
     public string Card { get; set; } = "CPU";
 
     private void SetInfo(object sender, RoutedEventArgs e) {
       switch (this.Card) {
         case "CPU":
+          this.Name = "CPU";
           this.Usage = 45;
           this.Temp = 67;
           break;
         case "RAM":
+          this.Name = "RAM";
           this.Usage = 55;
           this.Temp = 61;
           break;
         case "GPU":
+          this.Name = "GPU";
           this.Usage = 90;
           this.Temp = 95;
           break;
