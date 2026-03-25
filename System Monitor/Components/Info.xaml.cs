@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace System_Monitor.Components {
   /// <summary>
@@ -9,9 +10,10 @@ namespace System_Monitor.Components {
     public Info() {
       InitializeComponent();
       this.Loaded += SetInfo;
+      this.Unloaded += Info_Unloaded;
     }
 
-
+    private DispatcherTimer _timer;
 
 
 
@@ -35,39 +37,42 @@ namespace System_Monitor.Components {
     public static readonly DependencyProperty TempProperty =
         DependencyProperty.Register(nameof(Temp), typeof(int), typeof(Info), new PropertyMetadata(0));
 
-    public string Name {
-      get { return (string)GetValue(NameProperty); }
-      set { SetValue(NameProperty, value); }
+    public string DeviceName {
+      get { return (string)GetValue(DeviceNameProperty); }
+      set { SetValue(DeviceNameProperty, value); }
     }
 
-    // Using a DependencyProperty as the backing store for Name.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty NameProperty =
-        DependencyProperty.Register(nameof(Name), typeof(string), typeof(Info), new PropertyMetadata("X"));
+    // Using a DependencyProperty as the backing store for DeviceName.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty DeviceNameProperty =
+        DependencyProperty.Register(nameof(DeviceName), typeof(string), typeof(Info), new PropertyMetadata("X"));
 
-    public string Card { get; set; } = "CPU";
+    public string Card { get; set; }
 
     private void SetInfo(object sender, RoutedEventArgs e) {
-      switch (this.Card) {
-        case "CPU":
-          this.Name = "CPU";
-          this.Usage = 45;
-          this.Temp = 67;
-          break;
-        case "RAM":
-          this.Name = "RAM";
-          this.Usage = 55;
-          this.Temp = 61;
-          break;
-        case "GPU":
-          this.Name = "GPU";
-          this.Usage = 90;
-          this.Temp = 95;
-          break;
-        default:
-          this.Usage = 45;
-          this.Temp = 67;
-          break;
-      }
+      UpdateData();
+      _timer = new DispatcherTimer();
+      _timer.Interval = TimeSpan.FromSeconds(1);
+      _timer.Tick += (s, ev) => {
+        UpdateData(); // Mỗi giây gọi hàm lấy dữ liệu 1 lần
+      };
+      _timer.Start();
+    }
+
+    private void UpdateData() {
+      // 1. Kích hoạt Trạm phát Wifi cập nhật phần cứng (đã có chống spam)
+      HardwareService.Instance.RefreshData();
+
+      // 2. Lấy gói dữ liệu dựa theo chữ "CPU", "RAM" hoặc "GPU"
+      var data = HardwareService.Instance.GetInfo(this.Card);
+
+      // 3. Đổ dữ liệu thật vào các Property để hiển thị lên màn hình
+      this.DeviceName = data.Name;
+      this.Usage = data.Usage;
+      this.Temp = data.Temp;
+    }
+
+    private void Info_Unloaded(object sender, RoutedEventArgs e) {
+      _timer?.Stop();
     }
 
   }

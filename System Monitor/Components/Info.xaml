@@ -12,7 +12,7 @@
     <StackPanel>
       <TextBlock FontSize="25">
         <Run Text="Name: " />
-        <Run Text="{Binding Path=Name, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+        <Run Text="{Binding Path=DeviceName, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
       </TextBlock>
       <TextBlock FontSize="25">
         <Run Text="Usage: " />
