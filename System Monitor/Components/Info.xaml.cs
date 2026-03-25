@@ -1,5 +1,8 @@
-﻿using System.Windows;
+﻿using System.Globalization;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Media; // Thêm dòng này
 using System.Windows.Threading;
 
 namespace System_Monitor.Components {
@@ -75,5 +78,19 @@ namespace System_Monitor.Components {
       _timer?.Stop();
     }
 
+  }
+  public class UsageToColorConverter : IValueConverter {
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+      if (value is int usage) {
+        if (usage >= 80) return Brushes.Red;       // Quá tải -> Báo Đỏ
+        if (usage >= 50) return Brushes.DarkOrange;// Bắt đầu nóng -> Báo Cam
+        return Brushes.DeepSkyBlue;                // Bình thường -> Xanh dương
+      }
+      return Brushes.Gray;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+      throw new NotImplementedException();
+    }
   }
 }

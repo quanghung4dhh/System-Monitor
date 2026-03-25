@@ -8,22 +8,38 @@
   d:DesignHeight="450"
   d:DesignWidth="800"
   mc:Ignorable="d">
+  <UserControl.Resources>
+    <local:UsageToColorConverter x:Key="ColorConverter" />
+  </UserControl.Resources>
   <Grid>
     <StackPanel>
-      <TextBlock FontSize="25">
+      <TextBlock Margin="0,0,0,20" FontSize="25">
         <Run Text="Name: " />
         <Run Text="{Binding Path=DeviceName, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
       </TextBlock>
-      <TextBlock FontSize="25">
+      <TextBlock Margin="0,0,0,10" FontSize="25">
         <Run Text="Usage: " />
         <Run Text="{Binding Path=Usage, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
         <Run Text="%" />
       </TextBlock>
-      <TextBlock FontSize="25">
+      <ProgressBar
+        Height="15"
+        Margin="0,0,0,20"
+        Foreground="{Binding Path=Usage, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource ColorConverter}}"
+        Maximum="100"
+        Minimum="0"
+        Value="{Binding Path=Usage, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+      <TextBlock Margin="0,0,0,10" FontSize="25">
         <Run Text="Temp: " />
         <Run Text="{Binding Path=Temp, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
         <Run Text="°C" />
       </TextBlock>
+      <ProgressBar
+        Height="15"
+        Foreground="{Binding Path=Temp, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource ColorConverter}}"
+        Maximum="100"
+        Minimum="0"
+        Value="{Binding Path=Temp, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
 
     </StackPanel>
 

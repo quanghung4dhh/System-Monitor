@@ -41,6 +41,7 @@
 
         <comp:Info
           Grid.Column="1"
+          Margin="20,20,20,20"
           Card="CPU"
           Loaded="Info_Loaded" />
       </Grid>
@@ -68,6 +69,7 @@
 
         <comp:Info
           Grid.Column="1"
+          Margin="20,20,20,20"
           Card="RAM"
           Loaded="Info_Loaded" />
       </Grid>
@@ -95,6 +97,7 @@
 
         <comp:Info
           Grid.Column="1"
+          Margin="20,20,20,20"
           Card="GPU"
           Loaded="Info_Loaded" />
       </Grid>
